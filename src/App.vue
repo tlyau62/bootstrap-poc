@@ -5,30 +5,57 @@
       <router-link to="/about">About</router-link>
     </div>
 
-    <button type="button" class="btn btn-red" @click="switchDefault">Primary</button>
-    <button type="button" class="btn btn-red" @click="switchTheme2">Theme 2</button>
+    <p>current theme: {{curTheme.name}}</p>
+
+    <button
+      type="button"
+      class="btn btn-primary"
+      v-for="theme in themes"
+      :key="theme.name"
+      @click="switchTheme(theme)"
+    >{{theme.name}}</button>
 
     <router-view />
   </div>
 </template>
 
 <script>
-import appStyle from './app.useable.scss';
-import theme2 from './theme2.useable.scss';
+import defaultTheme from "@/theme/default.theme.scss";
+import customTheme from "@/theme/custom.theme.scss";
+import ceruleanTheme from "@/theme/cerulean.theme.scss";
 
 export default {
+  data() {
+    const themes = [
+      {
+        name: "default",
+        theme: defaultTheme
+      },
+      {
+        name: "custom",
+        theme: customTheme
+      },
+      {
+        name: "cerulean",
+        theme: ceruleanTheme
+      }
+    ];
+
+    return {
+      curTheme: themes[0],
+      themes
+    };
+  },
   methods: {
-    switchDefault() {
-      theme2.unuse();
-      appStyle.use();
-    },
-    switchTheme2() {
-      appStyle.unuse();
-      theme2.use();
+    switchTheme(newTheme) {
+      this.curTheme.theme.unuse();
+      newTheme.theme.use();
+      this.curTheme = newTheme;
     }
   },
   created() {
-    this.switchDefault();
+    console.log(this.curTheme.theme);
+    this.curTheme.theme.use();
   }
 };
 </script>
