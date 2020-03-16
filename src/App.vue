@@ -13,15 +13,18 @@
 </template>
 
 <script>
+import appStyle from './app.useable.scss';
+import theme2 from './theme2.useable.scss';
+
 export default {
   methods: {
     switchDefault() {
-      import("./App.scss").then(m => {
-        console.log(m);
-      });
+      theme2.unuse();
+      appStyle.use();
     },
     switchTheme2() {
-      import("./Theme2.scss");
+      appStyle.unuse();
+      theme2.use();
     }
   },
   created() {
