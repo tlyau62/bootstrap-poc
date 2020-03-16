@@ -5,27 +5,30 @@
       <router-link to="/about">About</router-link>
     </div>
 
-    <button type="button" class="btn btn-red" @click="switchDefault">Primary</button>
-    <button type="button" class="btn btn-red" @click="switchTheme2">Theme 2</button>
+    <button type="button" :class="[theme.btn, theme['btn-red']]" @click="switchDefault">Primary</button>
+    <button type="button" :class="[theme.btn, theme['btn-red']]" @click="switchTheme2">Theme 2</button>
 
     <router-view />
   </div>
 </template>
 
 <script>
+import appStyles from "./app.module.scss";
+import theme2Styles from "./theme2.module.scss";
+
 export default {
+  data() {
+    return {
+      theme: appStyles
+    };
+  },
   methods: {
     switchDefault() {
-      import("./App.scss").then(m => {
-        console.log(m);
-      });
+      this.theme = appStyles;
     },
     switchTheme2() {
-      import("./Theme2.scss");
+      this.theme = theme2Styles;
     }
-  },
-  created() {
-    this.switchDefault();
   }
 };
 </script>
