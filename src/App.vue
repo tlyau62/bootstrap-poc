@@ -5,13 +5,30 @@
       <router-link to="/about">About</router-link>
     </div>
 
-    <button type="button" class="btn btn-red">Primary</button>
+    <button type="button" class="btn btn-red" @click="switchDefault">Primary</button>
+    <button type="button" class="btn btn-red" @click="switchTheme2">Theme 2</button>
 
     <router-view />
   </div>
 </template>
 
-<style src="./App.scss" lang="scss"></style>
+<script>
+export default {
+  methods: {
+    switchDefault() {
+      import("./App.scss").then(m => {
+        console.log(m);
+      });
+    },
+    switchTheme2() {
+      import("./Theme2.scss");
+    }
+  },
+  created() {
+    this.switchDefault();
+  }
+};
+</script>
 
 <style lang="scss">
 #app {
